@@ -1,0 +1,37 @@
+{
+  "name": "sails-service-pusher",
+  "version": "0.1.0",
+  "description": "Service for Sails framework with Pusher features",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "istanbul cover _mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghaiklor/sails-service-pusher.git"
+  },
+  "keywords": [
+    "sails",
+    "service",
+    "pusher"
+  ],
+  "author": "ghaiklor",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ghaiklor/sails-service-pusher/issues"
+  },
+  "homepage": "https://github.com/ghaiklor/sails-service-pusher#readme",
+  "dependencies": {
+    "apn": "^1.7.3",
+    "bluebird": "^2.9.25",
+    "node-gcm": "^0.9.15"
+  },
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "istanbul": "^0.3.14",
+    "mocha": "^2.2.5"
+  }
+}
