@@ -27,7 +27,8 @@
   "dependencies": {
     "apn": "^1.7.4",
     "bluebird": "^2.9.32",
-    "gcm": "^1.0.1"
+    "gcm": "^1.0.1",
+    "mpns": "^2.1.0"
   },
   "devDependencies": {
     "chai": "^3.0.0",
