@@ -33,6 +33,14 @@ describe('BasePushNotification', function () {
     assert.notOk(pusher.getConfig('NOT_EXISTS'));
   });
 
+  it('Should properly get/set provider', function () {
+    var pusher = new BasePushNotification();
+
+    assert.notOk(pusher.getProvider());
+    assert.instanceOf(pusher.setProvider('SOME_PROVIDER'), BasePushNotification);
+    assert.equal(pusher.getProvider(), 'SOME_PROVIDER');
+  });
+
   it('Should properly throw error on send', function () {
     var pusher = new BasePushNotification();
 
