@@ -1,7 +1,7 @@
 var assert = require('chai').assert;
-var BasePushNotification = require('../lib/BasePushNotification');
+var BasePushNotification = require('../lib/BaseNotification');
 
-describe('BasePushNotification', function () {
+describe('BaseNotification', function () {
   it('Should properly export', function () {
     assert.isFunction(BasePushNotification);
     assert.isFunction(BasePushNotification.prototype.getConfig);
