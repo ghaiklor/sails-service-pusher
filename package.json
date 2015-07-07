@@ -24,14 +24,10 @@
     "url": "https://github.com/ghaiklor/sails-service-pusher/issues"
   },
   "homepage": "https://github.com/ghaiklor/sails-service-pusher#readme",
-  "dependencies": {
-    "apn": "^1.7.3",
-    "bluebird": "^2.9.25",
-    "node-gcm": "^0.9.15"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "chai": "^2.3.0",
-    "istanbul": "^0.3.14",
+    "chai": "^3.0.0",
+    "istanbul": "^0.3.17",
     "mocha": "^2.2.5"
   }
 }
