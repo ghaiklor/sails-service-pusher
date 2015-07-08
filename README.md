@@ -30,10 +30,9 @@ That's it, you can create pusher instances for your needs in your project.
 ```javascript
 // api/controllers/PusherController.js
 var ios = PusherService.create('ios', {
-  connection: {
-    cert: 'cert.pem',
-    key: 'cert.key'
-  }
+  device: '', // Device configuration like device tokens, etc...
+  notification: {}, // Notification configuration like title, body, badge, etc...
+  provider: {} // Provider configuration like Apple certificates or API keys for GCM
 });
 
 module.exports = {
@@ -73,7 +72,7 @@ var android = PusherService.create('android', {
 
 ### MPNSNotification
 
-var windows = PusherService.create('windows', {
+var wp = PusherService.create('wp', {
 
 });
 
