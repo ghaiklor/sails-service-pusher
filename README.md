@@ -53,7 +53,7 @@ module.exports = {
 
 ## API
 
-Each of Payment instances has only one method:
+Each of Pusher instances has only one method:
 
 - send(config) - Send Push Notification. In config you can override pre-defined configuration. Returns Promise;
 
