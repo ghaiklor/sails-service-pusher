@@ -29,18 +29,24 @@ That's it, you can create pusher instances for your needs in your project.
 ```javascript
 // api/controllers/PusherController.js
 var ios = PusherService.create('ios', {
-  provider: {}, // Provider configuration like Apple certificates or API keys for GCM
-  notification: {}, // Notification configuration like title, body, badge, etc...
-  device: '' // Device configuration like device tokens, etc...
+  provider: {
+    cert: 'cert.pem',
+    key: 'key.pem',
+    production: true
+  },
+  notification: {
+    title: 'Hello, World!',
+    body: 'Hi there!'
+  }
 });
 
 module.exports = {
   send: function(req, res) {
     ios
       .send({
-        device: '<DEVICE_TOKEN>',
+        device: ['<DEVICE_TOKEN>', '<DEVICE_TOKEN>'],
         notification: {
-          text: '<SOME_TEXT>'
+          body: 'I can override'
         }
       })
       .then(res.ok)
