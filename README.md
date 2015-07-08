@@ -8,7 +8,6 @@ Service for Sails framework with Pusher features.
 
 - APN (Apple Push Notification)
 - GCM (Google Cloud Messaging)
-- MPNS (Microsoft Push Notification Service)
 
 ## Getting Started
 
@@ -30,9 +29,9 @@ That's it, you can create pusher instances for your needs in your project.
 ```javascript
 // api/controllers/PusherController.js
 var ios = PusherService.create('ios', {
-  device: '', // Device configuration like device tokens, etc...
+  provider: {}, // Provider configuration like Apple certificates or API keys for GCM
   notification: {}, // Notification configuration like title, body, badge, etc...
-  provider: {} // Provider configuration like Apple certificates or API keys for GCM
+  device: '' // Device configuration like device tokens, etc...
 });
 
 module.exports = {
@@ -60,21 +59,59 @@ Each of Pusher instances has only one method:
 
 ### APNNotification
 
-var ios = PusherService.create('ios', {
+All of this examples contains all the configuration keys. And most of them is optional.
 
+```javascript
+var ios = PusherService.create('ios', {
+  device: [], // Array of string with device tokens
+  provider: {
+    cert: 'cert.pem', // The filename of the connection certificate to load from disk
+    key: 'key.pem', // The filename of the connection key to load from disk
+    production: false // Specifies which environment to connect to: Production (if true) or Sandbox (if false)
+  },
+  notification: {
+    title: '', // Indicates notification title
+    body: '', // Indicates notification body text
+    icon: '', // Indicates notification icon
+    sound: '', // Indicates sound to be played
+    badge: '', // Indicates the badge on client app home icon
+    tag: '', // Indicates whether each notification message results in a new entry on the notification center on Android
+    color: '', // Indicates color of the icon, expressed in #rrggbb format
+    click_action: '', // The action associated with a user click on the notification
+    payload: {} // Payload with custom information
+  }
 });
+
+ios.send({
+  device: ['TOKEN_1', 'TOKEN_2']
+}).then(console.log.bind(console)).catch(console.error.bind(console));
+```
 
 ### GCMNotification
 
+```javascript
 var android = PusherService.create('android', {
-
+  device: [], // Array of string with device tokens
+  provider: {
+    apiKey: '<GOOGLE_API_KEY>' // Your Google Server API Key
+  },
+  notification: {
+    title: '', // Indicates notification title
+    body: '', // Indicates notification body text
+    icon: '', // Indicates notification icon
+    sound: '', // Indicates sound to be played
+    badge: '', // Indicates the badge on client app home icon
+    tag: '', // Indicates whether each notification message results in a new entry on the notification center on Android
+    color: '', // Indicates color of the icon, expressed in #rrggbb format
+    click_action: '', // The action associated with a user click on the notification
+    payload: {} // Payload with custom information
+  }
 });
 
-### MPNSNotification
-
-var wp = PusherService.create('wp', {
-
-});
+android.send({
+  device: ['TOKEN_1', 'TOKEN_2']
+}).then(console.log.bind(console)).catch(console.error.bind(console));
+```
 
 ## License
 
