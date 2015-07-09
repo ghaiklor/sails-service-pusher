@@ -26,10 +26,9 @@
   "homepage": "https://github.com/ghaiklor/sails-service-pusher#readme",
   "dependencies": {
     "apn": "^1.7.4",
-    "bluebird": "^2.9.32",
-    "extend": "^3.0.0",
-    "gcm": "^1.0.1",
-    "mpns": "^2.1.0"
+    "bluebird": "^2.9.33",
+    "lodash": "^3.10.0",
+    "node-gcm": "^0.10.0"
   },
   "devDependencies": {
     "chai": "^3.0.0",
