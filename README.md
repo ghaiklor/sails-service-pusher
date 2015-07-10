@@ -61,6 +61,14 @@ Each of Pusher instances has only one method:
 
 - send(config) - Send Push Notification. In config you can override pre-defined configuration. Returns Promise;
 
+### Configuration explanation
+
+Configuration object has 3 keys:
+
+- device (String|Array) - Device tokens that should get notification
+- provider (Object) - Options that will go to each of SDKs ([APN](https://github.com/argon/node-apn/blob/master/doc/connection.markdown#apnconnectionoptions), [GCM](https://github.com/ToothlessGear/node-gcm#example-application))
+- notification (Object) - Options that will go to each of notifications (it has one interface for each of providers, see below)
+
 ## Examples
 
 ### APNNotification
