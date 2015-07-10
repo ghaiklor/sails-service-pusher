@@ -5,7 +5,6 @@ var APNNotification = require('../lib/APNNotification');
 var DEVICES = ['a1', 'b2', 'c3'];
 var NOTIFICATION = {
   title: 'TITLE',
-  body: 'BODY',
   icon: 'ICON',
   sound: 'SOUND',
   badge: 'BADGE',
@@ -41,6 +40,9 @@ describe('APNNotification', function () {
         cert: 'cert.pem',
         key: 'key.pem',
         production: false
+      },
+      notification: {
+        body: 'BODY'
       }
     });
 
@@ -66,6 +68,9 @@ describe('APNNotification', function () {
         cert: 'cert.pem',
         key: 'key.pem',
         production: false
+      },
+      notification: {
+        body: 'BODY'
       }
     });
 
