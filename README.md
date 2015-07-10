@@ -88,7 +88,8 @@ var ios = PusherService.create('ios', {
     body: 'Hey, there!', // Indicates notification body text
     icon: '', // Indicates notification icon
     sound: '', // Indicates sound to be played
-    badge: '' // Indicates the badge on client app home icon
+    badge: '', // Indicates the badge on client app home icon
+    payload: {} // Custom data to send within Push Notification
   }
 });
 
@@ -110,7 +111,8 @@ var android = PusherService.create('android', {
     body: 'Hey, there!', // Indicates notification body text
     icon: '', // Indicates notification icon
     sound: '', // Indicates sound to be played
-    badge: '' // Indicates the badge on client app home icon
+    badge: '', // Indicates the badge on client app home icon
+    payload: {} // Custom data to send within Push Notification
   }
 });
 
