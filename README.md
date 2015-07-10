@@ -84,15 +84,11 @@ var ios = PusherService.create('ios', {
     production: false // Specifies which environment to connect to: Production (if true) or Sandbox (if false)
   },
   notification: {
-    title: '', // Indicates notification title
-    body: '', // Indicates notification body text
+    title: 'iOS Test Push', // Indicates notification title
+    body: 'Hey, there!', // Indicates notification body text
     icon: '', // Indicates notification icon
     sound: '', // Indicates sound to be played
-    badge: '', // Indicates the badge on client app home icon
-    tag: '', // Indicates whether each notification message results in a new entry on the notification center on Android
-    color: '', // Indicates color of the icon, expressed in #rrggbb format
-    click_action: '', // The action associated with a user click on the notification
-    payload: {} // Payload with custom information
+    badge: '' // Indicates the badge on client app home icon
   }
 });
 
@@ -110,15 +106,11 @@ var android = PusherService.create('android', {
     apiKey: '<GOOGLE_API_KEY>' // Your Google Server API Key
   },
   notification: {
-    title: '', // Indicates notification title
-    body: '', // Indicates notification body text
+    title: 'Android Test Push', // Indicates notification title
+    body: 'Hey, there!', // Indicates notification body text
     icon: '', // Indicates notification icon
     sound: '', // Indicates sound to be played
-    badge: '', // Indicates the badge on client app home icon
-    tag: '', // Indicates whether each notification message results in a new entry on the notification center on Android
-    color: '', // Indicates color of the icon, expressed in #rrggbb format
-    click_action: '', // The action associated with a user click on the notification
-    payload: {} // Payload with custom information
+    badge: '' // Indicates the badge on client app home icon
   }
 });
 
