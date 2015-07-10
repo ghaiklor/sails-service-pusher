@@ -27,12 +27,7 @@ var NOTIFICATION_SHOULD_BE = {
   payload: {
     foo: 'bar',
     bar: 'foo'
-  },
-  title: 'TITLE',
-  body: 'BODY',
-  icon: 'ICON',
-  sound: 'SOUND',
-  badge: 'BADGE'
+  }
 };
 
 describe('APNNotification', function () {
@@ -40,7 +35,7 @@ describe('APNNotification', function () {
     assert.isFunction(APNNotification);
   });
 
-  it('Should properly send notification', function () {
+  it('Should properly send notification to multiple devices', function () {
     var ios = new APNNotification({
       provider: {
         cert: 'cert.pem',
