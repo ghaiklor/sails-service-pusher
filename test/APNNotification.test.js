@@ -2,16 +2,13 @@ var assert = require('chai').assert;
 var sinon = require('sinon');
 var APNNotification = require('../lib/APNNotification');
 
-var DEVICES = ['DEVICE_1', 'DEVICE_2'];
+var DEVICES = ['DEVICE_1', 'DEVICE_2', 'DEVICE_3'];
 var NOTIFICATION = {
   title: 'TITLE',
   body: 'BODY',
   icon: 'ICON',
   sound: 'SOUND',
   badge: 'BADGE',
-  tag: 'TAG',
-  color: 'COLOR',
-  click_action: 'CLICK_ACTION',
   payload: {
     foo: 'bar',
     bar: 'foo'
@@ -24,8 +21,8 @@ var NOTIFICATION_SHOULD_BE = {
       title: 'TITLE',
       body: 'BODY'
     },
-    badge: 'BADGE',
-    sound: 'SOUND'
+    sound: 'SOUND',
+    badge: 'BADGE'
   },
   payload: {
     foo: 'bar',
@@ -54,7 +51,7 @@ describe('APNNotification', function () {
       notification: NOTIFICATION
     });
 
-    assert(ios.getProvider().pushNotification.calledOnce);
+    assert(ios.getProvider().pushNotification.calledThrice);
     assert.equal(ios.getProvider().pushNotification.getCall(0).args[0], NOTIFICATION_SHOULD_BE);
     assert.equal(ios.getProvider().pushNotification.getCall(0).args[1], DEVICES);
 
