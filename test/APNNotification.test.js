@@ -59,4 +59,27 @@ describe('APNNotification', function () {
 
     ios.getProvider().pushNotification.restore();
   });
+
+  it('Should properly send notification to one device', function () {
+    var ios = new APNNotification({
+      provider: {
+        cert: 'cert.pem',
+        key: 'key.pem',
+        production: false
+      }
+    });
+
+    sinon.stub(ios.getProvider(), 'pushNotification');
+
+    ios.send({
+      device: 'a1',
+      notification: NOTIFICATION
+    });
+
+    assert(ios.getProvider().pushNotification.calledOnce);
+    assert.deepEqual(ios.getProvider().pushNotification.getCall(0).args[0].payload, NOTIFICATION_SHOULD_BE);
+    assert.equal(ios.getProvider().pushNotification.getCall(0).args[1], 'a1');
+
+    ios.getProvider().pushNotification.restore();
+  });
 });
