@@ -43,12 +43,7 @@ var ios = PusherService.create('ios', {
 module.exports = {
   send: function(req, res) {
     ios
-      .send({
-        device: ['<DEVICE_TOKEN>', '<DEVICE_TOKEN>'],
-        notification: {
-          body: 'I can override'
-        }
-      })
+      .send(['DEVICE_1', 'DEVICE_2'], {body: 'I can override'})
       .then(res.ok)
       .catch(res.serverError);
   }
