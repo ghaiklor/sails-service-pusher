@@ -48,10 +48,7 @@ describe('APNNotification', function () {
 
     sinon.stub(ios.getProvider(), 'pushNotification');
 
-    ios.send({
-      device: DEVICES,
-      notification: NOTIFICATION
-    });
+    ios.send(DEVICES, NOTIFICATION);
 
     assert(ios.getProvider().pushNotification.calledThrice);
     assert.deepEqual(ios.getProvider().pushNotification.getCall(0).args[0].payload, NOTIFICATION_SHOULD_BE);
@@ -76,10 +73,7 @@ describe('APNNotification', function () {
 
     sinon.stub(ios.getProvider(), 'pushNotification');
 
-    ios.send({
-      device: 'a1',
-      notification: NOTIFICATION
-    });
+    ios.send('a1', NOTIFICATION);
 
     assert(ios.getProvider().pushNotification.calledOnce);
     assert.deepEqual(ios.getProvider().pushNotification.getCall(0).args[0].payload, NOTIFICATION_SHOULD_BE);
