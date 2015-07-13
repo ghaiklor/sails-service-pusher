@@ -2,26 +2,26 @@ var assert = require('chai').assert;
 var sinon = require('sinon');
 var APNNotification = require('../lib/APNNotification');
 
-var DEVICES = ['a1', 'b2', 'c3'];
-var NOTIFICATION = {
-  title: 'TITLE',
-  icon: 'ICON',
-  sound: 'SOUND',
-  badge: 'BADGE',
-  payload: {
-    foo: 'bar',
-    bar: 'foo'
+var PROVIDER_CONFIG = {
+  provider: {
+    cert: 'cert.pem',
+    key: 'key.pem',
+    production: false
+  },
+  notification: {
+    title: 'TITLE',
+    badge: 1
   }
 };
 
+var DEVICES_LIST = ['a1', 'b2', 'c3'];
 var NOTIFICATION_SHOULD_BE = {
   aps: {
     alert: {
       title: 'TITLE',
       body: 'BODY'
     },
-    sound: 'SOUND',
-    badge: 'BADGE'
+    badge: 1
   },
   payload: {
     foo: 'bar',
@@ -35,20 +35,17 @@ describe('APNNotification', function () {
   });
 
   it('Should properly send notification to multiple devices', function () {
-    var ios = new APNNotification({
-      provider: {
-        cert: 'cert.pem',
-        key: 'key.pem',
-        production: false
-      },
-      notification: {
-        body: 'BODY'
-      }
-    });
+    var ios = new APNNotification(PROVIDER_CONFIG);
 
     sinon.stub(ios.getProvider(), 'pushNotification');
 
-    ios.send(DEVICES, NOTIFICATION);
+    ios.send(DEVICES_LIST, {
+      body: 'BODY',
+      payload: {
+        foo: 'bar',
+        bar: 'foo'
+      }
+    });
 
     assert(ios.getProvider().pushNotification.calledThrice);
     assert.deepEqual(ios.getProvider().pushNotification.getCall(0).args[0].payload, NOTIFICATION_SHOULD_BE);
@@ -60,20 +57,17 @@ describe('APNNotification', function () {
   });
 
   it('Should properly send notification to one device', function () {
-    var ios = new APNNotification({
-      provider: {
-        cert: 'cert.pem',
-        key: 'key.pem',
-        production: false
-      },
-      notification: {
-        body: 'BODY'
-      }
-    });
+    var ios = new APNNotification(PROVIDER_CONFIG);
 
     sinon.stub(ios.getProvider(), 'pushNotification');
 
-    ios.send('a1', NOTIFICATION);
+    ios.send('a1', {
+      body: 'BODY',
+      payload: {
+        foo: 'bar',
+        bar: 'foo'
+      }
+    });
 
     assert(ios.getProvider().pushNotification.calledOnce);
     assert.deepEqual(ios.getProvider().pushNotification.getCall(0).args[0].payload, NOTIFICATION_SHOULD_BE);
