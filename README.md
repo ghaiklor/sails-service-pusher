@@ -33,17 +33,16 @@ var ios = PusherService.create('ios', {
     cert: 'cert.pem',
     key: 'key.pem',
     production: true
-  },
-  notification: {
-    title: 'Hello, World!',
-    body: 'Hi there!'
   }
 });
 
 module.exports = {
   send: function(req, res) {
     ios
-      .send(['DEVICE_1', 'DEVICE_2'], {body: 'I can override'})
+      .send(['DEVICE_TOKEN_1', 'DEVICE_TOKEN_2'], {
+        title: req.param('title') || 'Pusher',
+        body: req.param('body') || 'Hello from sails-service-pusher'
+      })
       .then(res.ok)
       .catch(res.serverError);
   }
@@ -54,11 +53,11 @@ module.exports = {
 
 Each of Pusher instances has only one method:
 
-- send(config) - Send Push Notification. In config you can override pre-defined configuration. Returns Promise;
+- send(device, notification, config) - Sends Push Notification. `device` - Array of strings or string with device token. `notification` - Hashmap with config for notification (described in examples). `config` - Additional configuration for notification with specific platform. Returns Promise;
 
 ### Configuration explanation
 
-Configuration object has 3 keys:
+When you instantiate new instance via `PusherService.create()` you can provide configuration object with 3 keys:
 
 - device (String|Array) - Device tokens that should get notification
 - provider (Object) - Options that will go to each of SDKs ([APN](https://github.com/argon/node-apn/blob/master/doc/connection.markdown#apnconnectionoptions), [GCM](https://github.com/ToothlessGear/node-gcm#example-application))
@@ -88,9 +87,15 @@ var ios = PusherService.create('ios', {
   }
 });
 
-ios.send({
-  device: ['TOKEN_1', 'TOKEN_2']
-}).then(console.log.bind(console)).catch(console.error.bind(console));
+ios
+  .send({
+    device: ['TOKEN_1', 'TOKEN_2'],
+    notification: {
+      body: 'You can override pre-defined options'
+    }
+  })
+  .then(console.log.bind(console))
+  .catch(console.error.bind(console));
 ```
 
 ### GCMNotification
@@ -111,9 +116,15 @@ var android = PusherService.create('android', {
   }
 });
 
-android.send({
-  device: ['TOKEN_1', 'TOKEN_2']
-}).then(console.log.bind(console)).catch(console.error.bind(console));
+android
+  .send({
+    device: ['TOKEN_1', 'TOKEN_2'],
+    notification: {
+      body: 'You can override pre-defined options'
+    }
+  })
+  .then(console.log.bind(console))
+  .catch(console.error.bind(console));
 ```
 
 ## License
