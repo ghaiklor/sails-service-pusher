@@ -46,7 +46,7 @@ describe('GCMNotification', function () {
     });
 
     assert(android.getProvider().send.calledOnce);
-    assert.deepEqual(android.getProvider().send.getCall(0).args[0], NOTIFICATION_SHOULD_BE);
+    assert.deepEqual(android.getProvider().send.getCall(0).args[0].params, NOTIFICATION_SHOULD_BE);
     assert.equal(android.getProvider().send.getCall(0).args[1], DEVICES_LIST);
 
     android.getProvider().send.restore();
@@ -66,7 +66,7 @@ describe('GCMNotification', function () {
     });
 
     assert(android.getProvider().send.calledOnce);
-    assert.deepEqual(android.getProvider().send.getCall(0).args[0].payload, NOTIFICATION_SHOULD_BE);
+    assert.deepEqual(android.getProvider().send.getCall(0).args[0].params, NOTIFICATION_SHOULD_BE);
     assert.equal(android.getProvider().send.getCall(0).args[1], 'a1');
 
     android.getProvider().send.restore();
