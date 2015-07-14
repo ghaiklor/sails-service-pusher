@@ -54,6 +54,7 @@ module.exports = {
 Each of Pusher instances has only one method:
 
 - send(device, notification, config) - Sends Push Notification.
+
   `device` - Array of strings or string with device token.
 
   `notification` - Hashmap with config for notification (described in examples).
