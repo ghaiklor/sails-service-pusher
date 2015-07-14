@@ -35,7 +35,9 @@ describe('GCMNotification', function () {
   it('Should properly send notification to multiple devices', function () {
     var android = new GCMNotification(PROVIDER_CONFIG);
 
-    sinon.stub(android.getProvider(), 'send');
+    sinon.stub(android.getProvider(), 'send', function (message, device, cb) {
+      cb();
+    });
 
     android.send(DEVICES_LIST, {
       body: 'BODY',
@@ -55,7 +57,9 @@ describe('GCMNotification', function () {
   it('Should properly send notification to one device', function () {
     var android = new GCMNotification(PROVIDER_CONFIG);
 
-    sinon.stub(android.getProvider(), 'send');
+    sinon.stub(android.getProvider(), 'send', function (message, device, cb) {
+      cb();
+    });
 
     android.send('a1', {
       body: 'BODY',
