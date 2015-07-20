@@ -12,11 +12,11 @@ describe('PusherService', function () {
   });
 
   it('Should properly create ios instance', function () {
-    assert.instanceOf(PusherService.create('ios', {provider: {}}), APNNotification);
+    assert.instanceOf(PusherService.create('ios'), APNNotification);
   });
 
   it('Should properly create android instance', function () {
-    assert.instanceOf(PusherService.create('android', {provider: {}}), GCMNotification);
+    assert.instanceOf(PusherService.create('android'), GCMNotification);
   });
 
   it('Should properly throw exception on create unrecognized', function () {
