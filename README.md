@@ -61,11 +61,11 @@ When you instantiate new instance via `PusherService.create()` you can provide c
 
 Each of Pusher instances has only one method:
 
-### send(device, [notification], [config])
+### send([device], [notification], [config])
 
 Sends Push Notification.
 
-`device` - {Array} Device tokens (registration IDs) to which push need to send.
+`device` - {Array} Device tokens (registration IDs) to which push need to send (mixed up with pre-defined devices).
 
 `notification` - {Object} Config for notification:
 
