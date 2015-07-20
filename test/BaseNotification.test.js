@@ -17,6 +17,7 @@ describe('BaseNotification', function () {
     assert.notOk(notification.get('foo'));
     assert.instanceOf(notification.set('foo', 'bar'), BaseNotification);
     assert.instanceOf(notification.set('obj', {foo: 'bar'}), BaseNotification);
+    assert.deepEqual(notification.get(), {foo: 'bar', obj: {foo: 'bar'}});
     assert.deepEqual(notification.get('obj'), {foo: 'bar'});
     assert.equal(notification.get('obj.foo'), 'bar');
     assert.equal(notification.get('foo'), 'bar');
