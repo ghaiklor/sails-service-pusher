@@ -96,4 +96,52 @@ describe('APNNotification', function () {
 
     ios.getProvider().pushNotification.restore();
   });
+
+  it('Should properly send notification with all empty config', function () {
+    var ios = new APNNotification();
+    sinon.stub(ios.getProvider(), 'pushNotification');
+
+    ios.send();
+
+    assert.ok(ios.getProvider().pushNotification.notCalled);
+
+    ios.getProvider().pushNotification.restore();
+  });
+
+  it('Should properly send notification with empty pre-defined config and empty notification', function () {
+    var ios = new APNNotification();
+
+    sinon.stub(ios.getProvider(), 'pushNotification');
+
+    ios.send(['a1']);
+
+    assert.ok(ios.getProvider().pushNotification.calledOnce);
+    assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.title', '');
+    assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.body', '');
+    assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'priority', 10);
+    assert.equal(ios.getProvider().pushNotification.getCall(0).args[1], 'a1');
+
+    ios.getProvider().pushNotification.restore();
+  });
+
+  it('Should properly send notification with empty pre-defined config and custom notification', function () {
+    var ios = new APNNotification();
+
+    sinon.stub(ios.getProvider(), 'pushNotification');
+
+    ios.send(['a1'], {
+      title: 'CUSTOM_TITLE',
+      body: 'CUSTOM_BODY'
+    }, {
+      priority: 5
+    });
+
+    assert.ok(ios.getProvider().pushNotification.calledOnce);
+    assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.title', 'CUSTOM_TITLE');
+    assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.body', 'CUSTOM_BODY');
+    assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'priority', 5);
+    assert.equal(ios.getProvider().pushNotification.getCall(0).args[1], 'a1');
+
+    ios.getProvider().pushNotification.restore();
+  });
 });
