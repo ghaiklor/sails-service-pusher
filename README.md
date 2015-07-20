@@ -6,8 +6,8 @@ Service for Sails framework with Pusher features.
 
 ## List of supported pusher services
 
-- APN (Apple Push Notification)
-- GCM (Google Cloud Messaging)
+- APNS (Apple Push Notification Service)
+- GCMS (Google Cloud Messaging Service)
 
 ## Getting Started
 
