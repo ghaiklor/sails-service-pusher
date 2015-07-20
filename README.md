@@ -49,25 +49,34 @@ module.exports = {
 };
 ```
 
+## Configuration
+
+When you instantiate new instance via `PusherService.create()` you can provide configuration object with 3 keys:
+
+- `config.device` - {Array<String>|String} Device tokens that should get notification
+- `config.provider` - {Object} Options that will go to each of SDKs ([APN](https://github.com/argon/node-apn/blob/master/doc/connection.markdown#apnconnectionoptions), [GCM](https://github.com/ToothlessGear/node-gcm#example-application))
+- `config.notification` - {Object} Options that will go to each of notifications (it has one interface for each of providers, see below)
+
 ## API
 
 Each of Pusher instances has only one method:
 
-- send(device, notification, config) - Sends Push Notification.
+### send(device, [notification], [config])
 
-  `device` - Array of strings or string with device token.
+Sends Push Notification.
 
-  `notification` - Hashmap with config for notification (described in examples).
+`device` - {Array<String>|String} Device tokens (registration IDs) to which push need to send.
 
-  `config` - Additional configuration for notification with specific platform.
+`notification` - {Object} Config for notification:
 
-### Configuration explanation
+  - `notification.title` - Notification title
+  - `notification.body` - Notification body text
+  - `notification.icon` - Notification icon
+  - `notification.sound` - Notification sound to be played
+  - `notification.badge` - Indicates the badge on client app home icon
+  - `notification.payload` - Custom data to send within Push Notification
 
-When you instantiate new instance via `PusherService.create()` you can provide configuration object with 3 keys:
-
-- device (String|Array) - Device tokens that should get notification
-- provider (Object) - Options that will go to each of SDKs ([APN](https://github.com/argon/node-apn/blob/master/doc/connection.markdown#apnconnectionoptions), [GCM](https://github.com/ToothlessGear/node-gcm#example-application))
-- notification (Object) - Options that will go to each of notifications (it has one interface for each of providers, see below)
+`config` - Additional configuration for notification with specific platform. See appropriate documentation.
 
 ## Examples
 
