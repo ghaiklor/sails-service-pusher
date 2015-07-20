@@ -2,7 +2,8 @@ var assert = require('chai').assert;
 var sinon = require('sinon');
 var APNNotification = require('../lib/APNNotification');
 
-var PROVIDER_CONFIG = {
+var CONFIG = {
+  device: ['a1'],
   provider: {
     cert: 'cert.pem',
     key: 'key.pem',
@@ -10,18 +11,25 @@ var PROVIDER_CONFIG = {
   },
   notification: {
     title: 'TITLE',
-    badge: 1
+    body: 'BODY',
+    icon: 'ICON',
+    sound: 'SOUND',
+    badge: 'BADGE',
+    payload: {
+      foo: 'bar',
+      bar: 'foo'
+    }
   }
 };
 
-var DEVICES_LIST = ['a1', 'b2', 'c3'];
 var NOTIFICATION_SHOULD_BE = {
   aps: {
     alert: {
       title: 'TITLE',
       body: 'BODY'
     },
-    badge: 1
+    sound: 'SOUND',
+    badge: 'BADGE'
   },
   payload: {
     foo: 'bar',
@@ -34,20 +42,14 @@ describe('APNNotification', function () {
     assert.isFunction(APNNotification);
   });
 
-  it('Should properly send notification to multiple devices', function () {
-    var ios = new APNNotification(PROVIDER_CONFIG);
+  it('Should properly send notification with pre-defined options', function () {
+    var ios = new APNNotification(CONFIG);
 
     sinon.stub(ios.getProvider(), 'pushNotification');
 
-    ios.send(DEVICES_LIST, {
-      body: 'BODY',
-      payload: {
-        foo: 'bar',
-        bar: 'foo'
-      }
-    });
+    ios.send(['b2', 'c3']);
 
-    assert(ios.getProvider().pushNotification.calledThrice);
+    assert.ok(ios.getProvider().pushNotification.calledThrice);
     assert.deepEqual(ios.getProvider().pushNotification.getCall(0).args[0].payload, NOTIFICATION_SHOULD_BE);
     assert.equal(ios.getProvider().pushNotification.getCall(0).args[1], 'a1');
     assert.equal(ios.getProvider().pushNotification.getCall(1).args[1], 'b2');
@@ -56,22 +58,41 @@ describe('APNNotification', function () {
     ios.getProvider().pushNotification.restore();
   });
 
-  it('Should properly send notification to one device', function () {
-    var ios = new APNNotification(PROVIDER_CONFIG);
+  it('Should properly send notification with custom notification', function () {
+    var ios = new APNNotification(CONFIG);
 
     sinon.stub(ios.getProvider(), 'pushNotification');
 
-    ios.send('a1', {
-      body: 'BODY',
-      payload: {
-        foo: 'bar',
-        bar: 'foo'
-      }
+    ios.send(['b2', 'c3'], {
+      body: 'OVERRIDE_BODY'
     });
 
-    assert(ios.getProvider().pushNotification.calledOnce);
-    assert.deepEqual(ios.getProvider().pushNotification.getCall(0).args[0].payload, NOTIFICATION_SHOULD_BE);
+    assert.ok(ios.getProvider().pushNotification.calledThrice);
+    assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.body', 'OVERRIDE_BODY');
+    assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.sound', 'SOUND');
     assert.equal(ios.getProvider().pushNotification.getCall(0).args[1], 'a1');
+    assert.equal(ios.getProvider().pushNotification.getCall(1).args[1], 'b2');
+    assert.equal(ios.getProvider().pushNotification.getCall(2).args[1], 'c3');
+
+    ios.getProvider().pushNotification.restore();
+  });
+
+  it('Should properly send notification with extended notification', function () {
+    var ios = new APNNotification(CONFIG);
+
+    sinon.stub(ios.getProvider(), 'pushNotification');
+
+    ios.send(['b2'], {
+      body: 'OVERRIDE_BODY'
+    }, {
+      priority: 5
+    });
+
+    assert.ok(ios.getProvider().pushNotification.calledTwice);
+    assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.body', 'OVERRIDE_BODY');
+    assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'priority', 5);
+    assert.equal(ios.getProvider().pushNotification.getCall(0).args[1], 'a1');
+    assert.equal(ios.getProvider().pushNotification.getCall(1).args[1], 'b2');
 
     ios.getProvider().pushNotification.restore();
   });
