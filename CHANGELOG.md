@@ -1,8 +1,10 @@
 # Changelog
 
-## Edge version
+## 2.0.0
 
 - Replace `getConfig` and `setConfig` with appropriate `get` and `set` methods;
+- Refactor each of `APNNotification` and `GCMNotification`;
+- Optimize `create` method in `PusherService`;
 - Improve test coverage;
 - Update docs;
 
