@@ -2,6 +2,10 @@
 
 ## Edge version
 
+- Replace `getConfig` and `setConfig` with appropriate `get` and `set` methods;
+- Improve test coverage;
+- Update docs;
+
 ## 1.0.0
 
 - Add support for Apple Push Notification Service;
