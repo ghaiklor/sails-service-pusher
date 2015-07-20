@@ -53,7 +53,7 @@ module.exports = {
 
 When you instantiate new instance via `PusherService.create()` you can provide configuration object with 3 keys:
 
-- `config.device` - {Array|String} Device tokens that should get notification (will be merged with another devices in `send()`)
+- `config.device` - {Array} Device tokens that should get notification (will be merged with another devices in `send()`)
 - `config.provider` - {Object} Options that will go to each of SDKs ([APN](https://github.com/argon/node-apn/blob/master/doc/connection.markdown#apnconnectionoptions), [GCM](https://github.com/ToothlessGear/node-gcm#example-application))
 - `config.notification` - {Object} Options that will go to each of notifications (it has one interface for each of providers, see below)
 
@@ -65,7 +65,7 @@ Each of Pusher instances has only one method:
 
 Sends Push Notification.
 
-`device` - {Array|String} Device tokens (registration IDs) to which push need to send.
+`device` - {Array} Device tokens (registration IDs) to which push need to send.
 
 `notification` - {Object} Config for notification:
 
