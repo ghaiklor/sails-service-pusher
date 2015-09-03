@@ -130,8 +130,8 @@ describe('GCMNotification', function () {
       .then(function (result) {
         assert.equal(result, 'RESULT');
         assert.ok(android.getProvider().send.calledOnce);
-        assert.deepPropertyVal(android.getProvider().send.getCall(0).args[0], 'params.notification.body', '');
-        assert.deepPropertyVal(android.getProvider().send.getCall(0).args[0], 'params.notification.title', '');
+        assert.deepPropertyVal(android.getProvider().send.getCall(0).args[0], 'params.notification.body', undefined);
+        assert.deepPropertyVal(android.getProvider().send.getCall(0).args[0], 'params.notification.title', undefined);
         assert.deepEqual(android.getProvider().send.getCall(0).args[1], []);
         assert.isFunction(android.getProvider().send.getCall(0).args[2]);
 
@@ -154,8 +154,8 @@ describe('GCMNotification', function () {
       .then(function (result) {
         assert.equal(result, 'RESULT');
         assert.ok(android.getProvider().send.calledOnce);
-        assert.deepPropertyVal(android.getProvider().send.getCall(0).args[0], 'params.notification.body', '');
-        assert.deepPropertyVal(android.getProvider().send.getCall(0).args[0], 'params.notification.title', '');
+        assert.deepPropertyVal(android.getProvider().send.getCall(0).args[0], 'params.notification.body', undefined);
+        assert.deepPropertyVal(android.getProvider().send.getCall(0).args[0], 'params.notification.title', undefined);
         assert.deepEqual(android.getProvider().send.getCall(0).args[1], ['a1']);
         assert.isFunction(android.getProvider().send.getCall(0).args[2]);
 
