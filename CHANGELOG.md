@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+- Fix: Bug with invalid parameters in Google Cloud Messaging;
+
 ## 2.0.0
 
 - Replace `getConfig` and `setConfig` with appropriate `get` and `set` methods;
