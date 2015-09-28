@@ -17,15 +17,15 @@ export default class GCMNotification extends BaseNotification {
    */
   createNotification(_notification, _config) {
     let predefinedNotification = this.get('notification') || {};
-    let notification = _notification || {};
+    let customNotification = _notification || {};
     let config = _.merge({
-      data: notification.payload || predefinedNotification.payload || {},
+      data: customNotification.payload || predefinedNotification.payload || {},
       notification: {
-        title: notification.title || predefinedNotification.title,
-        body: notification.body || predefinedNotification.body,
-        icon: notification.icon || predefinedNotification.icon,
-        sound: notification.sound || predefinedNotification.sound,
-        badge: notification.badge || predefinedNotification.badge
+        title: customNotification.title || predefinedNotification.title,
+        body: customNotification.body || predefinedNotification.body,
+        icon: customNotification.icon || predefinedNotification.icon,
+        sound: customNotification.sound || predefinedNotification.sound,
+        badge: customNotification.badge || predefinedNotification.badge
       }
     }, _config);
 

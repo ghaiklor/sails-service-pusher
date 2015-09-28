@@ -5,6 +5,7 @@ import BaseNotification from './BaseNotification';
 /**
  * Default stderr
  * @type {Function}
+ * @private
  */
 const DEFAULT_STDERR = console.error.bind(console);
 
@@ -22,7 +23,7 @@ export default class APNNotification extends BaseNotification {
 
   /**
    * Create apn device with specified token
-   * @param {String} token Device token
+   * @param {String} _token Device token
    * @returns {Device}
    * @private
    */
@@ -52,13 +53,13 @@ export default class APNNotification extends BaseNotification {
       payload: customNotification.payload || predefinedNotification.payload || {}
     });
 
-    return _.assign(notification, _config);
+    return _.merge(notification, _config);
   }
 
   /**
    * Send push notification for one of devices
-   * @param {Device} device Device object
-   * @param {Notification} notification Notification object
+   * @param {Device} _device Device object
+   * @param {Notification} _notification Notification object
    * @returns {APNNotification}
    * @private
    */
