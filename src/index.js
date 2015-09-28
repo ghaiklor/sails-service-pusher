@@ -1,23 +1,21 @@
-var pushers = {
-  ios: require('./APNNotification'),
-  android: require('./GCMNotification')
+import APNNotification from './APNNotification';
+import GCMNotification from './GCMNotification';
+
+const pusher = {
+  ios: APNNotification,
+  android: GCMNotification
 };
 
-module.exports = {
-  /**
-   * Create instance of Pusher service
-   * @param {String} type
-   * @param {Object} config
-   * @returns {*}
-   */
-  create: function (type, config) {
-    if (pushers[type.toLowerCase()] instanceof Function) {
-      return new pushers[type.toLowerCase()](config);
-    } else {
-      throw new Error('Unrecognized type');
-    }
-  },
-
-  APNNotification: pushers.ios,
-  GCMNotification: pushers.android
-};
+/**
+ * Create instance of Pusher service
+ * @param {String} type
+ * @param {Object} config
+ * @returns {*}
+ */
+export default function (type, config) {
+  if (pusher[type.toLowerCase()] instanceof Function) {
+    return new pusher[type.toLowerCase()](config);
+  } else {
+    throw new Error('Unrecognized type -> ' + type);
+  }
+}
