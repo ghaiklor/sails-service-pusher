@@ -41,7 +41,7 @@ export default PusherService('ios', {
 // api/controllers/PusherController.js
 export default {
   send: function(req, res) {
-    ios
+    PusherService
       .send(['DEVICE_TOKEN_1', 'DEVICE_TOKEN_2'], {
         title: req.param('title') || 'Pusher',
         body: req.param('body') || 'Hello from sails-service-pusher'
