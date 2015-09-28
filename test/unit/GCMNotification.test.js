@@ -1,8 +1,8 @@
-var assert = require('chai').assert;
-var sinon = require('sinon');
-var GCMNotification = require('../lib/GCMNotification');
+import { assert } from 'chai';
+import sinon from 'sinon';
+import GCMNotification from '../../src/GCMNotification';
 
-var CONFIG = {
+const CONFIG = {
   device: ['a1'],
   provider: {
     apiKey: 'test'
@@ -20,7 +20,7 @@ var CONFIG = {
   }
 };
 
-var NOTIFICATION_SHOULD_BE = {
+const NOTIFICATION_SHOULD_BE = {
   notification: {
     title: 'TITLE',
     body: 'BODY',
@@ -34,21 +34,19 @@ var NOTIFICATION_SHOULD_BE = {
   }
 };
 
-describe('GCMNotification', function () {
-  it('Should properly export', function () {
+describe('GCMNotification', () => {
+  it('Should properly export', () => {
     assert.isFunction(GCMNotification);
   });
 
-  it('Should properly send notification with pre-defined options', function (done) {
-    var android = new GCMNotification(CONFIG);
+  it('Should properly send notification with pre-defined options', done => {
+    let android = new GCMNotification(CONFIG);
 
-    sinon.stub(android.getProvider(), 'send', function (message, devices, cb) {
-      cb(null, 'RESULT');
-    });
+    sinon.stub(android.getProvider(), 'send', (message, devices, cb) => cb(null, 'RESULT'));
 
     android
       .send(['b2', 'c3'])
-      .then(function (result) {
+      .then(result => {
         assert.equal(result, 'RESULT');
         assert(android.getProvider().send.calledOnce);
         assert.deepEqual(android.getProvider().send.getCall(0).args[0].params, NOTIFICATION_SHOULD_BE);
@@ -62,18 +60,16 @@ describe('GCMNotification', function () {
       .catch(done);
   });
 
-  it('Should properly send notification with custom notification', function (done) {
-    var android = new GCMNotification(CONFIG);
+  it('Should properly send notification with custom notification', done => {
+    let android = new GCMNotification(CONFIG);
 
-    sinon.stub(android.getProvider(), 'send', function (message, device, cb) {
-      cb(null, 'RESULT');
-    });
+    sinon.stub(android.getProvider(), 'send', (message, device, cb) => cb(null, 'RESULT'));
 
     android
       .send(['b2', 'c3'], {
         body: 'OVERRIDE_BODY'
       })
-      .then(function (result) {
+      .then(result => {
         assert.equal(result, 'RESULT');
         assert(android.getProvider().send.calledOnce);
         assert.deepPropertyVal(android.getProvider().send.getCall(0).args[0], 'params.notification.body', 'OVERRIDE_BODY');
@@ -89,12 +85,10 @@ describe('GCMNotification', function () {
       .catch(done);
   });
 
-  it('Should properly send notification with extended notification', function (done) {
-    var android = new GCMNotification(CONFIG);
+  it('Should properly send notification with extended notification', done => {
+    let android = new GCMNotification(CONFIG);
 
-    sinon.stub(android.getProvider(), 'send', function (message, device, cb) {
-      cb(null, 'RESULT');
-    });
+    sinon.stub(android.getProvider(), 'send', (message, device, cb) => cb(null, 'RESULT'));
 
     android
       .send(['b2'], {
@@ -102,7 +96,7 @@ describe('GCMNotification', function () {
       }, {
         dryRun: true
       })
-      .then(function (result) {
+      .then(result => {
         assert.equal(result, 'RESULT');
         assert.ok(android.getProvider().send.calledOnce);
         assert.deepPropertyVal(android.getProvider().send.getCall(0).args[0], 'params.notification.body', 'OVERRIDE_BODY');
@@ -118,16 +112,14 @@ describe('GCMNotification', function () {
       .catch(done);
   });
 
-  it('Should properly send notification with all empty config', function (done) {
-    var android = new GCMNotification();
+  it('Should properly send notification with all empty config', done => {
+    let android = new GCMNotification();
 
-    sinon.stub(android.getProvider(), 'send', function (message, device, cb) {
-      cb(null, 'RESULT');
-    });
+    sinon.stub(android.getProvider(), 'send', (message, device, cb) => cb(null, 'RESULT'));
 
     android
       .send()
-      .then(function (result) {
+      .then(result => {
         assert.equal(result, 'RESULT');
         assert.ok(android.getProvider().send.calledOnce);
         assert.deepPropertyVal(android.getProvider().send.getCall(0).args[0], 'params.notification.body', undefined);
@@ -142,16 +134,14 @@ describe('GCMNotification', function () {
       .catch(done);
   });
 
-  it('Should properly send notification with empty pre-defined config and empty notification', function (done) {
-    var android = new GCMNotification();
+  it('Should properly send notification with empty pre-defined config and empty notification', done => {
+    let android = new GCMNotification();
 
-    sinon.stub(android.getProvider(), 'send', function (message, device, cb) {
-      cb(null, 'RESULT');
-    });
+    sinon.stub(android.getProvider(), 'send', (message, device, cb) => cb(null, 'RESULT'));
 
     android
       .send(['a1'])
-      .then(function (result) {
+      .then(result => {
         assert.equal(result, 'RESULT');
         assert.ok(android.getProvider().send.calledOnce);
         assert.deepPropertyVal(android.getProvider().send.getCall(0).args[0], 'params.notification.body', undefined);
@@ -166,12 +156,10 @@ describe('GCMNotification', function () {
       .catch(done);
   });
 
-  it('Should properly send notification with empty pre-defined config and custom notification', function (done) {
-    var android = new GCMNotification();
+  it('Should properly send notification with empty pre-defined config and custom notification', done => {
+    let android = new GCMNotification();
 
-    sinon.stub(android.getProvider(), 'send', function (message, device, cb) {
-      cb(null, 'RESULT');
-    });
+    sinon.stub(android.getProvider(), 'send', (message, device, cb) => cb(null, 'RESULT'));
 
     android
       .send(['a1'], {
@@ -180,7 +168,7 @@ describe('GCMNotification', function () {
       }, {
         dryRun: true
       })
-      .then(function (result) {
+      .then(result => {
         assert.equal(result, 'RESULT');
         assert.ok(android.getProvider().send.calledOnce);
         assert.deepPropertyVal(android.getProvider().send.getCall(0).args[0], 'params.notification.title', 'CUSTOM_TITLE');
@@ -196,12 +184,10 @@ describe('GCMNotification', function () {
       .catch(done);
   });
 
-  it('Should properly reject promise on send notification', function (done) {
-    var android = new GCMNotification();
+  it('Should properly reject promise on send notification', done => {
+    let android = new GCMNotification();
 
-    sinon.stub(android.getProvider(), 'send', function (message, device, cb) {
-      cb(new Error('Some error occurred'));
-    });
+    sinon.stub(android.getProvider(), 'send', (message, device, cb) => cb(new Error('Some error occurred')));
 
     android
       .send(['a1'], {
@@ -211,7 +197,7 @@ describe('GCMNotification', function () {
         dryRun: true
       })
       .then(done)
-      .catch(function (error) {
+      .catch(error => {
         assert.instanceOf(error, Error);
         assert.ok(android.getProvider().send.calledOnce);
         assert.deepPropertyVal(android.getProvider().send.getCall(0).args[0], 'params.notification.title', 'CUSTOM_TITLE');

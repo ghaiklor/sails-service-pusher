@@ -9,7 +9,7 @@ const pusher = {
 /**
  * Create instance of Pusher service
  * @param {String} type
- * @param {Object} config
+ * @param {Object} [config]
  * @returns {*}
  */
 export default function (type, config) {

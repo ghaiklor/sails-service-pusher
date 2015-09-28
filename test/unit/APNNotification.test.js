@@ -1,8 +1,8 @@
-var assert = require('chai').assert;
-var sinon = require('sinon');
-var APNNotification = require('../lib/APNNotification');
+import { assert } from 'chai';
+import sinon from 'sinon';
+import APNNotification from '../../src/APNNotification';
 
-var CONFIG = {
+const CONFIG = {
   device: ['a1'],
   provider: {
     cert: 'cert.pem',
@@ -22,7 +22,7 @@ var CONFIG = {
   }
 };
 
-var NOTIFICATION_SHOULD_BE = {
+const NOTIFICATION_SHOULD_BE = {
   aps: {
     alert: {
       title: 'TITLE',
@@ -37,19 +37,19 @@ var NOTIFICATION_SHOULD_BE = {
   }
 };
 
-describe('APNNotification', function () {
-  it('Should properly export', function () {
+describe('APNNotification', () => {
+  it('Should properly export', () => {
     assert.isFunction(APNNotification);
   });
 
-  it('Should properly send notification with pre-defined options', function (done) {
-    var ios = new APNNotification(CONFIG);
+  it('Should properly send notification with pre-defined options', done => {
+    let ios = new APNNotification(CONFIG);
 
     sinon.stub(ios.getProvider(), 'pushNotification');
 
     ios
       .send(['b2', 'c3'])
-      .then(function () {
+      .then(() => {
         assert.ok(ios.getProvider().pushNotification.calledThrice);
         assert.deepEqual(ios.getProvider().pushNotification.getCall(0).args[0].payload, NOTIFICATION_SHOULD_BE);
         assert.equal(ios.getProvider().pushNotification.getCall(0).args[1], 'a1');
@@ -63,8 +63,8 @@ describe('APNNotification', function () {
       .catch(done);
   });
 
-  it('Should properly send notification with custom notification', function (done) {
-    var ios = new APNNotification(CONFIG);
+  it('Should properly send notification with custom notification', done => {
+    let ios = new APNNotification(CONFIG);
 
     sinon.stub(ios.getProvider(), 'pushNotification');
 
@@ -72,7 +72,7 @@ describe('APNNotification', function () {
       .send(['b2', 'c3'], {
         body: 'OVERRIDE_BODY'
       })
-      .then(function () {
+      .then(() => {
         assert.ok(ios.getProvider().pushNotification.calledThrice);
         assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.body', 'OVERRIDE_BODY');
         assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.sound', 'SOUND');
@@ -87,8 +87,8 @@ describe('APNNotification', function () {
       .catch(done);
   });
 
-  it('Should properly send notification with extended notification', function (done) {
-    var ios = new APNNotification(CONFIG);
+  it('Should properly send notification with extended notification', done => {
+    let ios = new APNNotification(CONFIG);
 
     sinon.stub(ios.getProvider(), 'pushNotification');
 
@@ -98,7 +98,7 @@ describe('APNNotification', function () {
       }, {
         priority: 5
       })
-      .then(function () {
+      .then(() => {
         assert.ok(ios.getProvider().pushNotification.calledTwice);
         assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.body', 'OVERRIDE_BODY');
         assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'priority', 5);
@@ -112,13 +112,14 @@ describe('APNNotification', function () {
       .catch(done);
   });
 
-  it('Should properly send notification with all empty config', function (done) {
-    var ios = new APNNotification();
+  it('Should properly send notification with all empty config', done => {
+    let ios = new APNNotification();
+
     sinon.stub(ios.getProvider(), 'pushNotification');
 
     ios
       .send()
-      .then(function () {
+      .then(() => {
         assert.ok(ios.getProvider().pushNotification.notCalled);
         ios.getProvider().pushNotification.restore();
 
@@ -127,14 +128,14 @@ describe('APNNotification', function () {
       .catch(done);
   });
 
-  it('Should properly send notification with empty pre-defined config and empty notification', function (done) {
-    var ios = new APNNotification();
+  it('Should properly send notification with empty pre-defined config and empty notification', done => {
+    let ios = new APNNotification();
 
     sinon.stub(ios.getProvider(), 'pushNotification');
 
     ios
       .send(['a1'])
-      .then(function () {
+      .then(() => {
         assert.ok(ios.getProvider().pushNotification.calledOnce);
         assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.title', '');
         assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.body', '');
@@ -148,8 +149,8 @@ describe('APNNotification', function () {
       .catch(done);
   });
 
-  it('Should properly send notification with empty pre-defined config and custom notification', function (done) {
-    var ios = new APNNotification();
+  it('Should properly send notification with empty pre-defined config and custom notification', done => {
+    let ios = new APNNotification();
 
     sinon.stub(ios.getProvider(), 'pushNotification');
 
@@ -160,7 +161,7 @@ describe('APNNotification', function () {
       }, {
         priority: 5
       })
-      .then(function () {
+      .then(() => {
         assert.ok(ios.getProvider().pushNotification.calledOnce);
         assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.title', 'CUSTOM_TITLE');
         assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.body', 'CUSTOM_BODY');

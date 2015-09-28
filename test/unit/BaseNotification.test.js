@@ -1,18 +1,13 @@
-var assert = require('chai').assert;
-var BaseNotification = require('../lib/BaseNotification');
+import { assert } from 'chai';
+import BaseNotification from '../../src/BaseNotification';
 
-describe('BaseNotification', function () {
-  it('Should properly export', function () {
+describe('BaseNotification', () => {
+  it('Should properly export', () => {
     assert.isFunction(BaseNotification);
-    assert.isFunction(BaseNotification.prototype.get);
-    assert.isFunction(BaseNotification.prototype.set);
-    assert.isFunction(BaseNotification.prototype.getProvider);
-    assert.isFunction(BaseNotification.prototype.setProvider);
-    assert.isFunction(BaseNotification.prototype.send);
   });
 
-  it('Should properly make objects configurable', function () {
-    var notification = new BaseNotification();
+  it('Should properly make objects configurable', () => {
+    let notification = new BaseNotification();
 
     assert.notOk(notification.get('foo'));
     assert.instanceOf(notification.set('foo', 'bar'), BaseNotification);
@@ -23,8 +18,8 @@ describe('BaseNotification', function () {
     assert.equal(notification.get('foo'), 'bar');
   });
 
-  it('Should properly create notification with pre-defined config', function () {
-    var notification = new BaseNotification({
+  it('Should properly create notification with pre-defined config', () => {
+    let notification = new BaseNotification({
       foo: 'bar',
       obj: {
         foo: 'bar'
@@ -37,8 +32,8 @@ describe('BaseNotification', function () {
     assert.notOk(notification.get('NOT_EXISTS'));
   });
 
-  it('Should properly get/set provider', function () {
-    var notification = new BaseNotification();
+  it('Should properly get/set provider', () => {
+    let notification = new BaseNotification();
 
     assert.notOk(notification.getProvider());
     assert.instanceOf(notification.setProvider('NOTIFICATION'), BaseNotification);
