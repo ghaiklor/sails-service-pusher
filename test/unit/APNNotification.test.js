@@ -137,8 +137,8 @@ describe('APNNotification', () => {
       .send(['a1'])
       .then(() => {
         assert.ok(ios.getProvider().pushNotification.calledOnce);
-        assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.title', '');
-        assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.body', '');
+        assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.title', undefined);
+        assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.body', undefined);
         assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'priority', 10);
         assert.equal(ios.getProvider().pushNotification.getCall(0).args[1], 'a1');
 

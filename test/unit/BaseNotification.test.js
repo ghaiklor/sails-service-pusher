@@ -35,7 +35,7 @@ describe('BaseNotification', () => {
   it('Should properly get/set provider', () => {
     let notification = new BaseNotification();
 
-    assert.notOk(notification.getProvider());
+    assert.deepEqual(notification.getProvider(), {});
     assert.instanceOf(notification.setProvider('NOTIFICATION'), BaseNotification);
     assert.equal(notification.getProvider(), 'NOTIFICATION');
   });
