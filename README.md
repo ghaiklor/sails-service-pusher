@@ -1,6 +1,13 @@
 # sails-service-pusher
 
-![Build Status](https://img.shields.io/travis/ghaiklor/sails-service-pusher.svg) ![Coverage](https://img.shields.io/coveralls/ghaiklor/sails-service-pusher.svg) ![Downloads](https://img.shields.io/npm/dm/sails-service-pusher.svg) ![npm version](https://img.shields.io/npm/v/sails-service-pusher.svg) ![dependencies](https://img.shields.io/david/ghaiklor/sails-service-pusher.svg) ![dev dependencies](https://img.shields.io/david/dev/ghaiklor/sails-service-pusher.svg) ![License](https://img.shields.io/npm/l/sails-service-pusher.svg)
+![Build Status](https://img.shields.io/travis/ghaiklor/sails-service-pusher.svg)
+![Coverage](https://img.shields.io/coveralls/ghaiklor/sails-service-pusher.svg)
+![Downloads](https://img.shields.io/npm/dm/sails-service-pusher.svg)
+![Downloads](https://img.shields.io/npm/dt/sails-service-pusher.svg)
+![npm version](https://img.shields.io/npm/v/sails-service-pusher.svg)
+![dependencies](https://img.shields.io/david/ghaiklor/sails-service-pusher.svg)
+![dev dependencies](https://img.shields.io/david/dev/ghaiklor/sails-service-pusher.svg)
+![License](https://img.shields.io/npm/l/sails-service-pusher.svg)
 
 Service for Sails framework with Pusher features.
 
@@ -17,26 +24,22 @@ Install this module.
 npm install sails-service-pusher
 ```
 
-Then require it in your service.
+Then require it in your service and create pusher instance.
 
 ```javascript
 // api/services/PusherService.js
-module.exports = require('sails-service-pusher');
-```
+import PusherService from 'sails-service-pusher';
 
-That's it, you can create pusher instances for your needs in your project.
-
-```javascript
-// api/controllers/PusherController.js
-var ios = PusherService.create('ios', {
+export default PusherService('ios', {
   provider: {
     cert: 'cert.pem',
     key: 'key.pem',
-    production: true
+    production: false
   }
 });
 
-module.exports = {
+// api/controllers/PusherController.js
+export default {
   send: function(req, res) {
     ios
       .send(['DEVICE_TOKEN_1', 'DEVICE_TOKEN_2'], {
@@ -44,14 +47,14 @@ module.exports = {
         body: req.param('body') || 'Hello from sails-service-pusher'
       })
       .then(res.ok)
-      .catch(res.serverError);
+      .catch(res.negotiate);
   }
 };
 ```
 
 ## Configuration
 
-When you instantiate new instance via `PusherService.create()` you can provide configuration object with 3 keys:
+When you instantiate new instance via `PusherService()` you can provide configuration object with 3 keys:
 
 - `config.device` - {Array} Device tokens that should get notification (will be merged with another devices in `send()`)
 - `config.provider` - {Object} Options that will go to each of SDKs ([APN](https://github.com/argon/node-apn/blob/master/doc/connection.markdown#apnconnectionoptions), [GCM](https://github.com/ToothlessGear/node-gcm#example-application))
@@ -85,7 +88,7 @@ Sends Push Notification.
 All of this examples contains all the configuration keys. And most of them is optional.
 
 ```javascript
-var ios = PusherService.create('ios', {
+let ios = PusherService('ios', {
   device: [], // Array of string with device tokens
   provider: {
     cert: 'cert.pem', // The filename of the connection certificate to load from disk
@@ -102,7 +105,7 @@ var ios = PusherService.create('ios', {
     maxConnections: 1, // The maximum number of connections to create for sending messages
     connectTimeout: 10000, // The duration of time the module should wait, in milliseconds
     connectionTimeout: 3600000, // The duration the socket should stay alive with no activity in milliseconds
-    connectionRetryLimit: 10, // The maximum number of connection failures that will be tolerated before `apn` will "terminate"
+    connectionRetryLimit: 10, // The maximum number of connection failures that will be tolerated before apn will "terminate"
     buffersNotifications: true, // Whether to buffer notifications and resend them after failure
     fastMode: false // Whether to aggresively empty the notification buffer while connected
   },
@@ -127,7 +130,7 @@ ios
 ### GCMNotification
 
 ```javascript
-var android = PusherService.create('android', {
+let android = PusherService('android', {
   device: [], // Array of string with device tokens
   provider: {
     apiKey: '<GOOGLE_API_KEY>', // Your Google Server API Key
