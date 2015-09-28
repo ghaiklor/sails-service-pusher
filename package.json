@@ -7,6 +7,8 @@
     "test": "test"
   },
   "scripts": {
+    "compile": "babel src --out-dir lib",
+    "prepublish": "npm run compile",
     "test": "istanbul cover _mocha"
   },
   "repository": {
