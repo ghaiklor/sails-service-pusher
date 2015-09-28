@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.0
+
+- Migration from ES5 to ES6 syntax;
+- Remove `.create()` method from PusherService. PusherService is a function itself that you can call `PusherService('android')`;
+- Update dependencies and pin them in `package.json`;
+
 ## 2.0.1
 
 - Fix: Bug with invalid parameters in Google Cloud Messaging;
