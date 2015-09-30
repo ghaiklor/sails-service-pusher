@@ -29,7 +29,7 @@
   "dependencies": {
     "apn": "1.7.4",
     "lodash": "3.10.1",
-    "node-gcm": "0.11.1"
+    "node-gcm": "0.12.0"
   },
   "devDependencies": {
     "babel": "^5.8.23",
