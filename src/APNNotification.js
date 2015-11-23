@@ -10,8 +10,8 @@ import BaseNotification from './BaseNotification';
 const DEFAULT_STDERR = console.error.bind(console);
 
 export default class APNNotification extends BaseNotification {
-  constructor(...args) {
-    super(...args);
+  constructor(config) {
+    super(config);
 
     this.setProvider(new apn.Connection(this.get('provider')));
 

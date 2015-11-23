@@ -3,8 +3,8 @@ import gcm from 'node-gcm';
 import BaseNotification from './BaseNotification';
 
 export default class GCMNotification extends BaseNotification {
-  constructor(...args) {
-    super(...args);
+  constructor(config) {
+    super(config);
 
     this.setProvider(new gcm.Sender(this.get('provider.apiKey'), this.get('provider')));
   }
