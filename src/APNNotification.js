@@ -41,17 +41,12 @@ export default class APNNotification extends BaseNotification {
   createNotification(_notification, _config) {
     let predefinedNotification = this.get('notification') || {};
     let customNotification = _notification || {};
-    let notification = new apn.Notification({
-      aps: {
-        alert: {
-          title: customNotification.title || predefinedNotification.title,
-          body: customNotification.body || predefinedNotification.body
-        },
-        sound: customNotification.sound || predefinedNotification.sound,
-        badge: customNotification.badge || predefinedNotification.badge
-      },
-      payload: customNotification.payload || predefinedNotification.payload || {}
-    });
+    let notification = new apn.Notification(customNotification.payload || predefinedNotification.payload || {});
+    
+    notification.sound = customNotification.sound || predefinedNotification.sound;
+    notification.badge = customNotification.badge || predefinedNotification.badge;
+    notification.setAlertTitle(customNotification.title || predefinedNotification.title);
+    notification.setAlertText(customNotification.body || predefinedNotification.body);
 
     return _.merge(notification, _config);
   }
