@@ -23,18 +23,16 @@ const CONFIG = {
 };
 
 const NOTIFICATION_SHOULD_BE = {
-  aps: {
-    alert: {
-      title: 'TITLE',
-      body: 'BODY'
-    },
-    sound: 'SOUND',
-    badge: 'BADGE'
-  },
-  payload: {
-    foo: 'bar',
-    bar: 'foo'
-  }
+  encoding: 'utf8',
+  payload: {foo: 'bar', bar: 'foo'},
+  expiry: 0,
+  priority: 10,
+  retryLimit: -1,
+  device: undefined,
+  compiled: false,
+  truncateAtWordEnd: false,
+  _sound: 'SOUND',
+  _alert: {title: 'TITLE', body: 'BODY'}
 };
 
 describe('APNNotification', () => {
@@ -51,7 +49,9 @@ describe('APNNotification', () => {
       .send(['b2', 'c3'])
       .then(() => {
         assert.ok(ios.getProvider().pushNotification.calledThrice);
-        assert.deepEqual(ios.getProvider().pushNotification.getCall(0).args[0].payload, NOTIFICATION_SHOULD_BE);
+        assert.deepEqual(ios.getProvider().pushNotification.getCall(0).args[0].payload, {foo: 'bar', bar: 'foo'});
+        assert.deepEqual(ios.getProvider().pushNotification.getCall(0).args[0]._sound, 'SOUND');
+        assert.deepEqual(ios.getProvider().pushNotification.getCall(0).args[0]._alert, {title: 'TITLE', body: 'BODY'});
         assert.equal(ios.getProvider().pushNotification.getCall(0).args[1], 'a1');
         assert.equal(ios.getProvider().pushNotification.getCall(1).args[1], 'b2');
         assert.equal(ios.getProvider().pushNotification.getCall(2).args[1], 'c3');
@@ -74,8 +74,8 @@ describe('APNNotification', () => {
       })
       .then(() => {
         assert.ok(ios.getProvider().pushNotification.calledThrice);
-        assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.body', 'OVERRIDE_BODY');
-        assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.sound', 'SOUND');
+        assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], '_alert.body', 'OVERRIDE_BODY');
+        assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], '_sound', 'SOUND');
         assert.equal(ios.getProvider().pushNotification.getCall(0).args[1], 'a1');
         assert.equal(ios.getProvider().pushNotification.getCall(1).args[1], 'b2');
         assert.equal(ios.getProvider().pushNotification.getCall(2).args[1], 'c3');
@@ -100,7 +100,7 @@ describe('APNNotification', () => {
       })
       .then(() => {
         assert.ok(ios.getProvider().pushNotification.calledTwice);
-        assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.body', 'OVERRIDE_BODY');
+        assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], '_alert.body', 'OVERRIDE_BODY');
         assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'priority', 5);
         assert.equal(ios.getProvider().pushNotification.getCall(0).args[1], 'a1');
         assert.equal(ios.getProvider().pushNotification.getCall(1).args[1], 'b2');
@@ -137,8 +137,8 @@ describe('APNNotification', () => {
       .send(['a1'])
       .then(() => {
         assert.ok(ios.getProvider().pushNotification.calledOnce);
-        assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.title', undefined);
-        assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.body', undefined);
+        assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], '_alert.title', undefined);
+        assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], '_alert.body', undefined);
         assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'priority', 10);
         assert.equal(ios.getProvider().pushNotification.getCall(0).args[1], 'a1');
 
@@ -163,8 +163,8 @@ describe('APNNotification', () => {
       })
       .then(() => {
         assert.ok(ios.getProvider().pushNotification.calledOnce);
-        assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.title', 'CUSTOM_TITLE');
-        assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'payload.aps.alert.body', 'CUSTOM_BODY');
+        assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], '_alert.title', 'CUSTOM_TITLE');
+        assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], '_alert.body', 'CUSTOM_BODY');
         assert.deepPropertyVal(ios.getProvider().pushNotification.getCall(0).args[0], 'priority', 5);
         assert.equal(ios.getProvider().pushNotification.getCall(0).args[1], 'a1');
 

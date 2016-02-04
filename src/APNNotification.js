@@ -42,7 +42,7 @@ export default class APNNotification extends BaseNotification {
     let predefinedNotification = this.get('notification') || {};
     let customNotification = _notification || {};
     let notification = new apn.Notification(customNotification.payload || predefinedNotification.payload || {});
-    
+
     notification.sound = customNotification.sound || predefinedNotification.sound;
     notification.badge = customNotification.badge || predefinedNotification.badge;
     notification.setAlertTitle(customNotification.title || predefinedNotification.title);
