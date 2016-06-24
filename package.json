@@ -28,7 +28,7 @@
   "dependencies": {
     "apn": "1.7.6",
     "lodash": "4.13.1",
-    "node-gcm": "0.14.2"
+    "node-gcm": "0.14.3"
   },
   "devDependencies": {
     "babel-cli": "6.9.0",
