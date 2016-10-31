@@ -27,7 +27,7 @@
   "homepage": "https://github.com/ghaiklor/sails-service-pusher#readme",
   "dependencies": {
     "apn": "1.7.8",
-    "lodash": "4.16.4",
+    "lodash": "4.16.5",
     "node-gcm": "0.14.4"
   },
   "devDependencies": {
