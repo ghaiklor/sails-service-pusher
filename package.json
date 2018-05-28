@@ -28,7 +28,7 @@
   "dependencies": {
     "apn": "3.0.0-alpha1",
     "lodash": "4.17.9",
-    "node-gcm": "1.0.0"
+    "node-gcm": "1.0.2"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",
@@ -39,8 +39,8 @@
     "cz-conventional-changelog": "2.1.0",
     "isparta": "4.0.0",
     "mocha": "5.2.0",
-    "semantic-release": "15.1.8",
-    "sinon": "5.0.1"
+    "semantic-release": "15.4.2",
+    "sinon": "5.0.8"
   },
   "config": {
     "commitizen": {
